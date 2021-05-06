@@ -1,9 +1,10 @@
-﻿ Connect-MSGraph
+﻿# Connect-MSGraph
  $uri = "https://graph.microsoft.com/beta/deviceManagement/intents"
         $securityConfigs = (Invoke-MSGraphRequest -Url $uri -HttpMethod GET).Value 
         $returnReport = @()
         $differentiatingSettings = @()
-        $originalProfileName="DefenderBase"  #set the profile to query
+     #   $originalProfileName="DefenderBase"  #set the profile to query
+          $originalProfileName="CloudPCbase"  #set the profile to query
         foreach ($config in $securityConfigs) {
             Write-Host -ForegroundColor Red $config.displayName
             if ($config.displayName -eq $originalProfileName) {
@@ -20,6 +21,7 @@
                 $originalSettingsCount = $originalSettings.count
                 $returnReport += "Original Security Configuration Name: $($config.displayName)"
                 $returnReport += "Original Settings Count: $originalSettingsCount"
+                Write-host  -ForegroundColor Green $returnReport
                 $originalSettings |export-csv -Path $originalProfileName".csv" -NoTypeInformation
                 }
                 }
